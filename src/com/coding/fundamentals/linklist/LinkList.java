@@ -6,8 +6,7 @@ public class LinkList {
   Node head;
 
   public void createHead() {
-    Node node = getNode();
-    head = node;
+    head = getNode();
   }
 
   public void insertAtEnd() {
@@ -53,7 +52,6 @@ public void insertAfterNode(int nodeNumber) {
   Node node = getNode();
   node.setNext(p.getNext());
   p.setNext(node);
-
 }
 
 public void insertBeforeNode(int nodeNumber) {
@@ -61,15 +59,17 @@ public void insertBeforeNode(int nodeNumber) {
     System.out.println("Please create Link list");
     return;
   }
+
   if(nodeNumber == 1) {
     insertAtBeginning();
     return;
   }
   int count = 1;
   Node p = head;
-  Node prev = null;
+  Node prevNode = null;
+
   while(count != nodeNumber && p != null) {
-    prev = p;
+    prevNode = p;
     p = p.getNext();
     count++;
   }
@@ -77,12 +77,63 @@ public void insertBeforeNode(int nodeNumber) {
     System.out.println("Node number does not exist");
     return;
   }
-
   Node node = getNode();
-  node.setNext(prev.getNext());
-  prev.setNext(node);
+  prevNode.setNext(node);
+  node.setNext(p);
 }
+  public void deleteAtEnd() {
+    if(head == null) {
+      System.out.println("Please create Link list");
+      return;
+    }
 
+    Node p = head;
+    Node t = null;
+    while(p.getNext() != null) {
+      t = p;
+      p = p.getNext();
+    }
+    if(p == head) {
+      head = null;
+      return;
+    }
+    t.setNext(null);
+  }
+
+  public void deleteAtBeginning() {
+    if(head == null) {
+      System.out.println("Please create Link list");
+      return;
+    }
+    Node p = head;
+    head = head.getNext();
+    p.setNext(null);
+  }
+
+  public void deleteANode(int nodeNumber) {
+    if(head == null) {
+      System.out.println("Please create Link list");
+      return;
+    }
+    if(nodeNumber == 1) {
+      deleteAtBeginning();
+      return;
+    }
+    Node p = head;
+    Node t = null;
+    int count = 1;
+    while(p != null && count != nodeNumber) {
+      t = p;
+      p = p.getNext();
+      count++;
+    }
+    if( p == null) {
+      System.out.println("Node number does not exist");
+      return;
+    }
+    t.setNext(p.getNext());
+    p.setNext(null);
+  }
   private static Node getNode() {
     Scanner sc = new Scanner(System.in);
     System.out.print("\nEnter a value into node");
